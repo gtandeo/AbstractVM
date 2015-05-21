@@ -5,45 +5,25 @@
 # include <cstdlib>
 # include <iostream>
 
-typedef enum eOperandType
-{
-    INT8,
-    INT16,
-    INT32,
-    FLOAT,
-    DOUBLE
-} eOperandType;
-
 class IOperand {
 
-typedef IOperand const *(IOperand::*fct)(const std::string &) const;
-
 public:
-	IOperand(void);
-	IOperand(IOperand const &src);
-	virtual ~IOperand( void ) {}
-	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
-	
-	//virtual int getPrecision( void ) const = 0; // Precision of the type of the instance
-	virtual eOperandType getType( void ) const = 0; // Type of the instance
-	virtual std::string getValue( void ) const = 0; // Value of the instance
+	IOperand(void){}
+	IOperand(IOperand const &src) {*this=src;}
 
-	virtual IOperand const * operator+( IOperand const & rhs ) const = 0; // Sum
-	virtual IOperand const * operator-( IOperand const & rhs ) const = 0; // Difference
-	virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
-	virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
-	virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
+	virtual intgetPrecision(void) const = 0; // Precision of the type of the instance
+	virtual eOperandTypegetType(void) const = 0; // Type of the instance
 
-private:
-	eOperandType		_type;
-	std::string			_value;
+	virtual IOperandconst * operator+(IOperand const &rhs) const = 0; // Sum
+	virtual IOperandconst * operator-(IOperand const &rhs) const = 0; // Difference
+	virtual IOperandconst * operator*(IOperand const &rhs) const = 0; // Product
+	virtual IOperandconst * operator/(IOperand const &rhs) const = 0; // Quotient
+	virtual IOperandconst * operator%(IOperand const &rhs) const = 0; // Modulo
 
-	IOperand const * createInt8( std::string const & value ) const;
-	IOperand const * createInt16( std::string const & value ) const;
-	IOperand const * createInt32( std::string const & value ) const;
-	IOperand const * createFloat( std::string const & value ) const;
-	IOperand const * createDouble( std::string const & value ) const;
-	static const fct	constexpr tab[5] = {&IOperand::createInt8, &IOperand::createInt16, &IOperand::createInt32, &IOperand::createFloat, &IOperand::createDouble};
+	virtual std::string const &toString(void) const = 0; // String representation of the instance
+
+	virtual~IOperand(void){}
+
 };
 
 #endif

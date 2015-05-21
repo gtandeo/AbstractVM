@@ -1,11 +1,11 @@
 NAME = avm
 
-FILES = main
+FILES = main IOperand.class Operand.class
 FILES_FOLD = srcs/
 SRCS = $(addprefix $(FILES_FOLD), $(addsuffix .cpp, $(FILES)))
 OBJS = $(SRCS:.cpp=.o)
 
-INC_FILES = IOperand.class
+INC_FILES = IOperand.class Operand.class
 INC_FOLDER = includes/
 INC_SRCS = $(addprefix $(INC_FOLDER), $(addsuffix .hpp, $(INC_FILES)))
 INC = -I $(INC_FOLDER)

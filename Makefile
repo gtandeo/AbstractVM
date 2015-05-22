@@ -1,6 +1,6 @@
 NAME = avm
 
-FILES = main IOperand.class Operand.class
+FILES = main Operand.class
 FILES_FOLD = srcs/
 SRCS = $(addprefix $(FILES_FOLD), $(addsuffix .cpp, $(FILES)))
 OBJS = $(SRCS:.cpp=.o)

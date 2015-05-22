@@ -5,22 +5,28 @@
 # include <cstdlib>
 # include <iostream>
 
+enum	eOperandType {
+	INT8 = 0,
+	INT16 = 1,
+	INT32 = 2,
+	FLOAT = 3,
+	DOUBLE = 4
+};
+
 class IOperand {
 
 public:
-	IOperand(void){}
-	IOperand(IOperand const &src) {*this=src;}
 
-	virtual intgetPrecision(void) const = 0; // Precision of the type of the instance
-	virtual eOperandTypegetType(void) const = 0; // Type of the instance
+	//virtual int getPrecision(void) const = 0; // Precision of the type of the instance
+	//virtual eOperandType getType(void) const = 0; // Type of the instance
 
-	virtual IOperandconst * operator+(IOperand const &rhs) const = 0; // Sum
-	virtual IOperandconst * operator-(IOperand const &rhs) const = 0; // Difference
-	virtual IOperandconst * operator*(IOperand const &rhs) const = 0; // Product
-	virtual IOperandconst * operator/(IOperand const &rhs) const = 0; // Quotient
-	virtual IOperandconst * operator%(IOperand const &rhs) const = 0; // Modulo
+	// virtual IOperand const * operator+(IOperand const &rhs) const = 0; // Sum
+	// virtual IOperand const * operator-(IOperand const &rhs) const = 0; // Difference
+	// virtual IOperand const * operator*(IOperand const &rhs) const = 0; // Product
+	// virtual IOperand const * operator/(IOperand const &rhs) const = 0; // Quotient
+	// virtual IOperand const * operator%(IOperand const &rhs) const = 0; // Modulo
 
-	virtual std::string const &toString(void) const = 0; // String representation of the instance
+	//virtual std::string const &toString(void) const = 0; // String representation of the instance
 
 	virtual~IOperand(void){}
 

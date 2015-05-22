@@ -2,11 +2,6 @@
 
 Operand::Operand(std::string const &value, eOperandType type) : _value(value), _type(type)
 {
-	_tab[0] = &Operand::createInt8;
-	_tab[1] = &Operand::createInt16;
-	_tab[2] = &Operand::createInt32;
-	_tab[3] = &Operand::createFloat;
-	_tab[4] = &Operand::createDouble;
 	return ;
 }
 
@@ -35,15 +30,12 @@ IOperand const * operator%(IOperand const &rhs) const
 
 }*/
 
-IOperand const * Operand::createOperand(eOperandType type, std::string const &value) const
-{
-	return (this->*_tab[type])(value);
-}
-
 IOperand const * Operand::createInt8(std::string const &value) const
 {
 	Operand		*ret;
 
+	if (std::atoi(value.c_str()) > INT8_MAX || std::atoi(value.c_str()) < INT8_MIN)
+		throw std::exception();
 	ret = new Operand(value, INT8);
 	return ret;
 }

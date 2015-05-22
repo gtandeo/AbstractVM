@@ -13,10 +13,14 @@ public:
 	Operand(std::string const &value, eOperandType type);
 	~Operand(void) {}
 
-	IOperand const * createOperand(eOperandType type, std::string const &value) const;
-
 private:
-	fctPtr			_tab[5];
+	fctPtr			_tab[5] {
+		&Operand::createInt8,
+		&Operand::createInt16,
+		&Operand::createInt32,
+		&Operand::createFloat,
+		&Operand::createDouble
+	};
 	std::string		_value;
 	eOperandType	_type;
 

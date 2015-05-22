@@ -1,4 +1,4 @@
-#include "IOperand.class.hpp"
+#include "Operand.class.hpp"
 
 int		main(void)
 {

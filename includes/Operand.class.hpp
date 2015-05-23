@@ -3,6 +3,7 @@
 
 # include <stdlib.h>
 # include <sstream>
+# include <cmath>
 # include "IOperand.class.hpp"
 # include "Factory.class.hpp"
 
@@ -16,14 +17,14 @@ public:
 	Operand(std::string const &value, eOperandType type);
 	~Operand(void) {}
 
-	//int getPrecision(void) const; // Precision of the type of the instance
+	int getPrecision(void) const; // Precision of the type of the instance
 	eOperandType getType(void) const; // Type of the instance
 
 	IOperand const * operator+(IOperand const &rhs) const; // Sum
 	IOperand const * operator-(IOperand const &rhs) const; // Difference
 	IOperand const * operator*(IOperand const &rhs) const; // Product
 	IOperand const * operator/(IOperand const &rhs) const; // Quotient
-	//IOperand const * operator%(IOperand const &rhs) const; // Modulo
+	IOperand const * operator%(IOperand const &rhs) const; // Modulo
 
 	std::string const &toString(void) const; // String representation of the instance
 

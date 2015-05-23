@@ -1,6 +1,6 @@
 NAME = avm
 
-FILES = Operand.class Factory.class main
+FILES = parsing Operand.class Factory.class main
 FILES_FOLD = srcs/
 SRCS = $(addprefix $(FILES_FOLD), $(addsuffix .cpp, $(FILES)))
 OBJS = $(SRCS:.cpp=.o)

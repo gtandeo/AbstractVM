@@ -4,20 +4,7 @@
 
 int		main(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
-	IOperand	const *i = new Operand("34", INT8);
-	IOperand	const *j = new Operand("345.4", DOUBLE);
-
-	std::cout << i->getType() << std::endl;
-	std::cout << j->getType() << std::endl;
-	std::cout << i->toString() << std::endl;
-	std::cout << j->toString() << std::endl;
-
-	IOperand	const *k = *i + *j;
-	std::cout << k->getType() << std::endl;
-	std::cout << k->toString() << std::endl;
-	/*Parsing	p;
+	Parsing	p;
 	if (ac == 1)
 		try {
 			p.stdoutParsing();
@@ -36,5 +23,5 @@ int		main(int ac, char **av)
 	}
 	else
 		std::cout << "usage: ./avm [file ...]" << std::endl;
-	*/return 0;
+	return 0;
 }

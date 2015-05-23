@@ -22,24 +22,52 @@ IOperand const * Operand::operator+(IOperand const &rhs) const
 	return ret;
 }
 
-/*IOperand const * Oprerand::operator-(IOperand const &rhs) const
+IOperand const * Operand::operator-(IOperand const &rhs) const
 {
+	Factory			f;
+	eOperandType	e;
+	std::stringstream	ss;
 
+	this->getType() >= rhs.getType() ? e = this->getType() : e = rhs.getType();
+	ss << std::stod(this->toString().c_str()) - std::stod(rhs.toString().c_str());
+	IOperand const *ret = f.createOperand(e, ss.str());
+	return ret;
 }
 
-IOperand const * Oprerand::operator*(IOperand const &rhs) const
+IOperand const * Operand::operator*(IOperand const &rhs) const
 {
+	Factory			f;
+	eOperandType	e;
+	std::stringstream	ss;
 
+	this->getType() >= rhs.getType() ? e = this->getType() : e = rhs.getType();
+	ss << std::stod(this->toString().c_str()) * std::stod(rhs.toString().c_str());
+	IOperand const *ret = f.createOperand(e, ss.str());
+	return ret;
 }
 
-IOperand const * Oprerand::operator/(IOperand const &rhs) const
+IOperand const * Operand::operator/(IOperand const &rhs) const
 {
+	Factory			f;
+	eOperandType	e;
+	std::stringstream	ss;
 
+	this->getType() >= rhs.getType() ? e = this->getType() : e = rhs.getType();
+	ss << std::stod(this->toString().c_str()) / std::stod(rhs.toString().c_str());
+	IOperand const *ret = f.createOperand(e, ss.str());
+	return ret;
 }
 
-IOperand const * Oprerand::operator%(IOperand const &rhs) const
+/*IOperand const * Operand::operator%(IOperand const &rhs) const
 {
+	Factory			f;
+	eOperandType	e;
+	std::stringstream	ss;
 
+	this->getType() >= rhs.getType() ? e = this->getType() : e = rhs.getType();
+	ss << std::stod(this->toString().c_str()) % std::stod(rhs.toString().c_str());
+	IOperand const *ret = f.createOperand(e, ss.str());
+	return ret;
 }*/
 
 std::string const &Operand::toString(void) const

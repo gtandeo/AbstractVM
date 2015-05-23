@@ -1,5 +1,5 @@
 #include "Parsing.class.hpp"
-
+#include <string>
 Parsing::Parsing(void)
 {
 	_cmds.push_back("push");
@@ -15,10 +15,36 @@ Parsing::Parsing(void)
 	_cmds.push_back("exit");
 }
 
-bool	Parsing::checkCmd(std::string const &line)
+bool	Parsing::checkCmd1(std::string const &line)
 {
-	if (std::find(_cmds.begin(), _cmds.end(), line) != _cmds.end())
+	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\([-]?[0-9]+\\)$", std::regex_constants::icase);
+	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\([-]?[0-9]+(?:\\.[0-9]+)?\\)[\\s]*$", std::regex_constants::icase);
+	std::smatch		m;
+
+	if (regex_search(line, m, r1))
+	{
+		std::string		cmd = m[1].str();
+		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
+		std::string		type = m[2].str();
+		std::transform(type.begin(), type.end(), type.begin(), ::tolower);
+
 		return true;
+	}
+	return false;
+}
+
+bool	Parsing::checkCmd2(std::string const &line)
+{
+	std::regex		r1("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]+(int8|int16|int32)[\\s]*\\([-]?[0-9]+\\)$", std::regex_constants::icase);
+	std::regex		r2("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]+(float|double)[\\s]*\\([-]?[0-9]+(?:\\.[0-9]+)?\\)[\\s]*$", std::regex_constants::icase);
+	std::smatch		m;
+
+	if (regex_search(line, m, r1))
+	{
+		std::string		cmd = m[1].str();
+		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
+		return true;
+	}
 	return false;
 }
 
@@ -29,9 +55,8 @@ void	Parsing::fileParsing(const char *av)
 
 	while (std::getline(file, line) && line != "exit")
 	{
-		if (!checkCmd(line))
+		if (!checkCmd1(line))
 			throw std::exception();
-		//execCmd(line);
 	}
 	if (line != "exit")
 		throw std::exception();
@@ -45,9 +70,8 @@ void	Parsing::stdoutParsing(void)
 	while (line != "exit" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
-		if (!checkCmd(line))
+		if (!checkCmd1(line))
 			throw std::exception();
-		//execCmd(line);
 	}
 	return ;
 }

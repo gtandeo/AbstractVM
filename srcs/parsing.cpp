@@ -223,7 +223,7 @@ void	Parsing::print(void)
 		std::cout << static_cast<char>(ret) << std::endl;
 		return ;
 	}
-	throw std::exception();
+	throw Parsing::AssertException();
 }
 
 bool	Parsing::checkCmd(std::string const &line)

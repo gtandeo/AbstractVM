@@ -1,10 +1,12 @@
 pop
 push int8(34345)
 push int8(34)
+print
 assert int8(34)
 assert int8(35) 
 sub
 push int32(34562)
+print
 push int16(xrg
 dump
 push int8(46)

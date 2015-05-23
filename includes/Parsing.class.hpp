@@ -36,6 +36,24 @@ public:
 	void	fileParsing(const char *av);
 	void	stdoutParsing(void);
 
+	class UnknownException : public std::exception {
+		public:
+			UnknownException(void);
+			UnknownException(UnknownException const &src);
+			~UnknownException(void) throw();
+
+			const char	*what() const throw();
+	};
+
+	class LessThatTwoValuesException : public std::exception {
+		public:
+			LessThatTwoValuesException(void);
+			LessThatTwoValuesException(LessThatTwoValuesException const &src);
+			~LessThatTwoValuesException(void) throw();
+
+			const char	*what() const throw();
+	};
+
 private:
 	std::vector<std::string>			_cmds;
 	std::vector<std::string>			_inputs;

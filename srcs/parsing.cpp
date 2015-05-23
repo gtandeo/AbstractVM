@@ -329,7 +329,10 @@ void	Parsing::stdoutParsing(void)
 
 	initPtr();
 	while (line != "exit" && !std::cin.eof())
+	{
+		std::getline(std::cin, line);
 		_inputs.push_back(line);
+	}
 	while (std::getline(std::cin, line) && line != "#");
 	execCmd();
 	return ;

@@ -17,8 +17,8 @@ public:
 	Operand(std::string const &value, eOperandType type);
 	~Operand(void) {}
 
-	int getPrecision(void) const; // Precision of the type of the instance
-	eOperandType getType(void) const; // Type of the instance
+	int				getPrecision(void) const; // Precision of the type of the instance
+	eOperandType	getType(void) const; // Type of the instance
 
 	IOperand const * operator+(IOperand const &rhs) const; // Sum
 	IOperand const * operator-(IOperand const &rhs) const; // Difference

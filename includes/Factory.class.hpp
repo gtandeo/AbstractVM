@@ -14,6 +14,24 @@ public:
 
 	IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 
+	class OverFlowException : public std::exception {
+		public:
+			OverFlowException(void);
+			OverFlowException(OverFlowException const &src);
+			~OverFlowException(void) throw();
+
+			const char	*what() const throw();
+	};
+
+	class UnderFlowException : public std::exception {
+		public:
+			UnderFlowException(void);
+			UnderFlowException(UnderFlowException const &src);
+			~UnderFlowException(void) throw();
+
+			const char	*what() const throw();
+	};
+
 private:
 	fctPtr	_tab[5] = {
 		&Factory::createInt8,

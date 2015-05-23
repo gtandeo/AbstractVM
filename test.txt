@@ -1,0 +1,15 @@
+pop
+push int8(34345)
+push int8(34)
+assert int8(34)
+assert int8(35) 
+sub
+push int32(34562)
+push int16(xrg
+dump
+push int8(46)
+print
+pop
+dump
+exit
+#

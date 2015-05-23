@@ -54,6 +54,24 @@ public:
 			const char	*what() const throw();
 	};
 
+	class PopOnAnEmptyStackException : public std::exception {
+		public:
+			PopOnAnEmptyStackException(void);
+			PopOnAnEmptyStackException(PopOnAnEmptyStackException const &src);
+			~PopOnAnEmptyStackException(void) throw();
+
+			const char	*what() const throw();
+	};
+
+	class AssertException : public std::exception {
+		public:
+			AssertException(void);
+			AssertException(AssertException const &src);
+			~AssertException(void) throw();
+
+			const char	*what() const throw();
+	};
+
 private:
 	std::vector<std::string>			_cmds;
 	std::vector<std::string>			_inputs;

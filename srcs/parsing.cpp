@@ -1,5 +1,89 @@
 #include "Parsing.class.hpp"
 
+Parsing::UnknownException::UnknownException(void)
+{
+	return ;
+}
+
+Parsing::UnknownException::UnknownException(UnknownException const &src)
+{
+	*this = src;
+	return ;
+}
+
+Parsing::UnknownException::~UnknownException(void) throw()
+{
+	return ;
+}
+
+const char	*Parsing::Parsing::UnknownException::what() const throw()
+{
+	return "std::exception: Unknown command";
+};
+
+Parsing::LessThatTwoValuesException::LessThatTwoValuesException(void)
+{
+	return ;
+}
+
+Parsing::LessThatTwoValuesException::LessThatTwoValuesException(LessThatTwoValuesException const &src)
+{
+	*this = src;
+	return ;
+}
+
+Parsing::LessThatTwoValuesException::~LessThatTwoValuesException(void) throw()
+{
+	return ;
+}
+
+const char	*Parsing::Parsing::LessThatTwoValuesException::what() const throw()
+{
+	return "std::exception: stack is composed of less that two values";
+};
+
+Parsing::PopOnAnEmptyStackException::PopOnAnEmptyStackException(void)
+{
+	return ;
+}
+
+Parsing::PopOnAnEmptyStackException::PopOnAnEmptyStackException(PopOnAnEmptyStackException const &src)
+{
+	*this = src;
+	return ;
+}
+
+Parsing::PopOnAnEmptyStackException::~PopOnAnEmptyStackException(void) throw()
+{
+	return ;
+}
+
+const char	*Parsing::Parsing::PopOnAnEmptyStackException::what() const throw()
+{
+	return "std::exception: pop on an empty stack";
+};
+
+Parsing::AssertException::AssertException(void)
+{
+	return ;
+}
+
+Parsing::AssertException::AssertException(AssertException const &src)
+{
+	*this = src;
+	return ;
+}
+
+Parsing::AssertException::~AssertException(void) throw()
+{
+	return ;
+}
+
+const char	*Parsing::Parsing::AssertException::what() const throw()
+{
+	return "std::exception: assert instruction is not true";
+};
+
 Parsing::Parsing(void)
 {
 	_cmds.push_back("push");
@@ -23,15 +107,14 @@ void	Parsing::push(IOperand const *data)
 
 void	Parsing::assert(IOperand const *data)
 {
-	if (data->toString() == _container.top()->toString() && data->getType() == _container.top()->getType())
-		return ;
-	throw std::exception();
+	if (data->toString() != _container.top()->toString() || data->getType() != _container.top()->getType())
+		throw Parsing::AssertException();
 }
 
 void	Parsing::pop(void)
 {
 	if (!_container.size())
-		throw std::exception();
+		throw Parsing::PopOnAnEmptyStackException();
 	_container.pop();
 	return ;
 }
@@ -55,7 +138,7 @@ void	Parsing::add(void)
 	IOperand const	*result;
 
 	if (_container.size() < 2)
-		throw std::exception();
+		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
 	result = *tmp + *_container.top();
@@ -71,7 +154,7 @@ void	Parsing::sub(void)
 	IOperand const	*result;
 
 	if (_container.size() < 2)
-		throw std::exception();
+		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
 	result = *tmp - *_container.top();
@@ -87,7 +170,7 @@ void	Parsing::mul(void)
 	IOperand const	*result;
 
 	if (_container.size() < 2)
-		throw std::exception();
+		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
 	result = *tmp * *_container.top();
@@ -103,7 +186,7 @@ void	Parsing::div(void)
 	IOperand const	*result;
 
 	if (_container.size() < 2)
-		throw std::exception();
+		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
 	result = *tmp / *_container.top();
@@ -119,7 +202,7 @@ void	Parsing::mod(void)
 	IOperand const	*result;
 
 	if (_container.size() < 2)
-		throw std::exception();
+		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
 	result = *tmp % *_container.top();
@@ -198,7 +281,7 @@ bool	Parsing::checkCmd(std::string const &line)
 	}
 	else if (line == "exit")
 		return true;
-	throw std::exception();
+	throw Parsing::UnknownException();
 }
 
 void	Parsing::execCmd(void)
@@ -209,7 +292,7 @@ void	Parsing::execCmd(void)
 			checkCmd(*it);
 		}
 		catch (std::exception &e) {
-			std::cout << "exception in line: " << *it << std::endl;//e.what();
+			std::cout << e.what() << std::endl;
 		}
 	}
 }
@@ -235,15 +318,7 @@ void	Parsing::fileParsing(const char *av)
 
 	initPtr();
 	while (std::getline(file, line) && line != "exit")
-	{
-		/*try {
-			checkCmd(line);
-		}
-		catch (std::exception &e) {
-			e.what();
-		}*/
 		_inputs.push_back(line);
-	}
 	execCmd();
 	return ;
 }
@@ -254,16 +329,7 @@ void	Parsing::stdoutParsing(void)
 
 	initPtr();
 	while (line != "exit" && !std::cin.eof())
-	{
-		std::getline(std::cin, line);
-		/*try {
-			checkCmd(line);
-		}
-		catch (std::exception &e) {
-			e.what();
-		}*/
 		_inputs.push_back(line);
-	}
 	while (std::getline(std::cin, line) && line != "#");
 	execCmd();
 	return ;

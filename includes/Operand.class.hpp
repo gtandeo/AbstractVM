@@ -14,21 +14,18 @@ public:
 	~Operand(void) {}
 
 private:
-	fctPtr			_tab[5] {
-		&Operand::createInt8,
-		&Operand::createInt16,
-		&Operand::createInt32,
-		&Operand::createFloat,
-		&Operand::createDouble
-	};
 	std::string		_value;
 	eOperandType	_type;
+	//int getPrecision(void) const; // Precision of the type of the instance
+	//eOperandType getType(void) const; // Type of the instance
 
-	IOperand const * createInt8(std::string const &value) const;
-	IOperand const * createInt16(std::string const &value) const;
-	IOperand const * createInt32(std::string const &value) const;
-	IOperand const * createFloat(std::string const &value) const;
-	IOperand const * createDouble(std::string const &value) const;
+	//IOperand const * operator+(IOperand const &rhs) const; // Sum
+	//IOperand const * operator-(IOperand const &rhs) const; // Difference
+	//IOperand const * operator*(IOperand const &rhs) const; // Product
+	//IOperand const * operator/(IOperand const &rhs) const; // Quotient
+	//IOperand const * operator%(IOperand const &rhs) const; // Modulo
+
+	//std::string const &toString(void) const; // String representation of the instance
 
 };
 

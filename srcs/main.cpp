@@ -1,4 +1,5 @@
 #include "Operand.class.hpp"
+#include "Factory.class.hpp"
 
 int		main(void)
 {

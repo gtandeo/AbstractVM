@@ -23,7 +23,9 @@ void	Parsing::push(IOperand const *data)
 
 void	Parsing::assert(IOperand const *data)
 {
-	(void)data;
+	if (data->toString() == _container.top()->toString() && data->getType() == _container.top()->getType())
+		return ;
+	throw std::exception();
 }
 
 void	Parsing::pop(void)
@@ -36,7 +38,14 @@ void	Parsing::pop(void)
 
 void	Parsing::dump(void)
 {
-	;
+	std::stack<IOperand const *>	tmp;
+
+	tmp = _container;
+	while (tmp.size())
+	{
+		std::cout << tmp.top()->toString() << std::endl;
+		tmp.pop();
+	}
 }
 
 void	Parsing::add(void)
@@ -121,14 +130,15 @@ void	Parsing::mod(void)
 
 void	Parsing::print(void)
 {
-	std::stack<IOperand const *>	tmp;
+	std::stringstream	ss;
+	int					ret;
 
-	tmp = _container;
-	while (tmp.size())
-	{
-		std::cout << tmp.top()->toString() << std::endl;
-		tmp.pop();
-	}
+	if (_container.top()->getType() == INT8)
+		ss << _container.top()->toString();
+	else
+		throw std::exception();
+	ss >> ret;
+	std::cout << ret << std::endl;
 }
 
 bool	Parsing::checkCmd1(std::string const &line)
@@ -144,7 +154,16 @@ bool	Parsing::checkCmd1(std::string const &line)
 		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
 		std::string		type = m[2].str();
 		std::transform(type.begin(), type.end(), type.begin(), ::tolower);
-		(this->*_op2[m[1]])(f.createOperand(DOUBLE, m[3].str()));
+		if (m[2] == "int8")
+			(this->*_op2[m[1]])(f.createOperand(INT8, m[3].str()));
+		else if (m[2] == "int16")
+			(this->*_op2[m[1]])(f.createOperand(INT16, m[3].str()));
+		else if (m[2] == "int32")
+			(this->*_op2[m[1]])(f.createOperand(INT32, m[3].str()));
+		else if (m[2] == "float")
+			(this->*_op2[m[1]])(f.createOperand(FLOAT, m[3].str()));
+		else if (m[2] == "double")
+			(this->*_op2[m[1]])(f.createOperand(DOUBLE, m[3].str()));
 		return true;
 	}
 	return false;

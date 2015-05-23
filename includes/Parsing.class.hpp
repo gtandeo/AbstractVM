@@ -38,6 +38,7 @@ public:
 
 private:
 	std::vector<std::string>			_cmds;
+	std::vector<std::string>			_inputs;
 	std::map<std::string, operation1>	_op1;
 	std::map<std::string, operation2>	_op2;
 	std::stack<IOperand const *>		_container;

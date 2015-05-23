@@ -2,8 +2,7 @@
 
 IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const
 {
-	const IOperand		*ret = (this->*_tab[type])(value);
-	return ret;
+	return (this->*_tab[type])(value);
 }
 
 IOperand const * Factory::createInt8(std::string const &value) const

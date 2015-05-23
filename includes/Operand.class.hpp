@@ -16,9 +16,6 @@ public:
 	Operand(std::string const &value, eOperandType type);
 	~Operand(void) {}
 
-private:
-	std::string		_value;
-	eOperandType	_type;
 	//int getPrecision(void) const; // Precision of the type of the instance
 	eOperandType getType(void) const; // Type of the instance
 
@@ -29,6 +26,10 @@ private:
 	//IOperand const * operator%(IOperand const &rhs) const; // Modulo
 
 	std::string const &toString(void) const; // String representation of the instance
+
+private:
+	std::string		_value;
+	eOperandType	_type;
 
 };
 

@@ -3,7 +3,7 @@
 
 # include <fstream>
 # include <iostream>
-# include <vector>
+# include <list>
 # include <map>
 # include <regex>
 # include "Operand.class.hpp"
@@ -19,6 +19,17 @@ public:
 	Parsing(Parsing const &src) {*this = src;}
 	~Parsing(void) {}
 
+	void	push(IOperand const *data);
+	void	assert(IOperand const *data);
+	void	pop(void);
+	void	dump(void);
+	void	add(void);
+	void	sub(void);
+	void	mul(void);
+	void	div(void);
+	void	mod(void);
+	void	print(void);
+	
 	bool	checkCmd1(std::string const &line);
 	bool	checkCmd2(std::string const &line);
 	void	fileParsing(const char *av);
@@ -28,7 +39,7 @@ private:
 	std::vector<std::string>			_cmds;
 	std::map<std::string, operation1>	_op1;
 	std::map<std::string, operation2>	_op2;
-	//std::vector<IOperand const *>		_container;
+	std::list<IOperand const *>		_container;
 
 };
 

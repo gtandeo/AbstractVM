@@ -133,19 +133,24 @@ void	Parsing::print(void)
 	std::stringstream	ss;
 	int					ret;
 
-	if (_container.top()->getType() == INT8)
+	if (_container.size() && _container.top()->getType() == INT8)
+	{
 		ss << _container.top()->toString();
-	else
-		throw std::exception();
-	ss >> ret;
-	std::cout << ret << std::endl;
+		ss >> ret;
+		std::cout << static_cast<char>(ret) << std::endl;
+		return ;
+	}
+	throw std::exception();
 }
 
-bool	Parsing::checkCmd1(std::string const &line)
+bool	Parsing::checkCmd(std::string const &line)
 {
-	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)$", std::regex_constants::icase);
+	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\([-]?[0-9]+(?:\\.[0-9]+)?\\)[\\s]*$", std::regex_constants::icase);
+	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
+	std::smatch		m2;
+	std::smatch		m3;
 	Factory			f;
 
 	if (regex_search(line, m, r1))
@@ -166,22 +171,47 @@ bool	Parsing::checkCmd1(std::string const &line)
 			(this->*_op2[m[1]])(f.createOperand(DOUBLE, m[3].str()));
 		return true;
 	}
-	return false;
-}
-
-bool	Parsing::checkCmd2(std::string const &line)
-{
-	std::regex		r1("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]*$", std::regex_constants::icase);
-	std::smatch		m;
-
-	if (regex_search(line, m, r1))
+	else if (regex_search(line, m2, r2))
 	{
-		std::string		cmd = m[1].str();
+		std::string		cmd = m2[1].str();
 		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
-		(this->*_op1[m[1]])();
+		std::string		type = m2[2].str();
+		std::transform(type.begin(), type.end(), type.begin(), ::tolower);
+		if (m2[2] == "int8")
+			(this->*_op2[m2[1]])(f.createOperand(INT8, m2[3].str()));
+		else if (m2[2] == "int16")
+			(this->*_op2[m2[1]])(f.createOperand(INT16, m2[3].str()));
+		else if (m2[2] == "int32")
+			(this->*_op2[m2[1]])(f.createOperand(INT32, m2[3].str()));
+		else if (m2[2] == "float")
+			(this->*_op2[m2[1]])(f.createOperand(FLOAT, m2[3].str()));
+		else if (m2[2] == "double")
+			(this->*_op2[m2[1]])(f.createOperand(DOUBLE, m2[3].str()));
 		return true;
 	}
-	return false;
+	else if (regex_search(line, m3, r3))
+	{
+		std::string		cmd = m3[1].str();
+		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
+		(this->*_op1[m3[1]])();
+		return true;
+	}
+	else if (line == "exit")
+		return true;
+	throw std::exception();
+}
+
+void	Parsing::execCmd(void)
+{
+	for (std::vector<std::string>::iterator it = _inputs.begin(); it != _inputs.end(); it++)
+	{
+		try {
+			checkCmd(*it);
+		}
+		catch (std::exception &e) {
+			std::cout << "exception in line: " << *it << std::endl;//e.what();
+		}
+	}
 }
 
 void	Parsing::initPtr(void)
@@ -206,11 +236,15 @@ void	Parsing::fileParsing(const char *av)
 	initPtr();
 	while (std::getline(file, line) && line != "exit")
 	{
-		if (!checkCmd1(line) && !checkCmd2(line))
-			throw std::exception();
+		/*try {
+			checkCmd(line);
+		}
+		catch (std::exception &e) {
+			e.what();
+		}*/
+		_inputs.push_back(line);
 	}
-	if (line != "exit")
-		throw std::exception();
+	execCmd();
 	return ;
 }
 
@@ -222,8 +256,15 @@ void	Parsing::stdoutParsing(void)
 	while (line != "exit" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
-		if (!checkCmd1(line) && !checkCmd2(line))
-			throw std::exception();
+		/*try {
+			checkCmd(line);
+		}
+		catch (std::exception &e) {
+			e.what();
+		}*/
+		_inputs.push_back(line);
 	}
+	while (std::getline(std::cin, line) && line != "#");
+	execCmd();
 	return ;
 }

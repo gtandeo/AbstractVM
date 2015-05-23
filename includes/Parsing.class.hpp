@@ -31,8 +31,8 @@ public:
 	void	print(void);
 	
 	void	initPtr(void);
-	bool	checkCmd1(std::string const &line);
-	bool	checkCmd2(std::string const &line);
+	void	execCmd(void);
+	bool	checkCmd(std::string const &line);
 	void	fileParsing(const char *av);
 	void	stdoutParsing(void);
 

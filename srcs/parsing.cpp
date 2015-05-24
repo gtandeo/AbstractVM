@@ -273,8 +273,10 @@ void	Parsing::fileParsing(const char *av)
 
 	initPtr();
 	while (std::getline(file, line) && line != "exit" && line != ";;")
-		_inputs.push_back(line);
-	std::cout << line << std::endl;
+	{
+		if (line[0] != ';')
+			_inputs.push_back(line);
+	}
 	execCmd();
 	if (line != "exit")
 		throw Parsing::ExitException();
@@ -289,7 +291,8 @@ void	Parsing::stdoutParsing(void)
 	while (line != "exit" && line != ";;" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
-		_inputs.push_back(line);
+		if (line[0] != ';')
+			_inputs.push_back(line);
 	}
 	if (line != "exit")
 		throw Parsing::ExitException();

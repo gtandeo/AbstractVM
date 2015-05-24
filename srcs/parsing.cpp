@@ -25,6 +25,11 @@ const char	*Parsing::Parsing::DivModException::what() const throw()
 	return "std::exception: division/modulo by 0";
 };
 
+const char	*Parsing::Parsing::ExitException::what() const throw()
+{
+	return "std::exception: program doesn’t have an exit instruction";
+};
+
 Parsing::Parsing(void)
 {
 	_cmds.push_back("push");
@@ -267,9 +272,12 @@ void	Parsing::fileParsing(const char *av)
 	std::string		line;
 
 	initPtr();
-	while (std::getline(file, line) && line != "exit")
+	while (std::getline(file, line) && line != "exit" && line != "#")
 		_inputs.push_back(line);
+	std::cout << line << std::endl;
 	execCmd();
+	if (line != "exit")
+		throw Parsing::ExitException();
 	return ;
 }
 
@@ -278,12 +286,14 @@ void	Parsing::stdoutParsing(void)
 	std::string		line;
 
 	initPtr();
-	while (line != "exit" && !std::cin.eof())
+	while (line != "exit" && line != "#" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
 		_inputs.push_back(line);
 	}
-	while (std::getline(std::cin, line) && line != "#");
+	if (line != "exit")
+		throw Parsing::ExitException();
+	while (line != "#" && std::getline(std::cin, line));
 	execCmd();
 	return ;
 }

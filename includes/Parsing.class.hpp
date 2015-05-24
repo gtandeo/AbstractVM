@@ -81,6 +81,15 @@ public:
 			const char	*what() const throw();
 	};
 
+	class ExitException : public std::exception {
+		public:
+			ExitException(void) {}
+			ExitException(ExitException const &src) {*this = src;}
+			~ExitException(void) throw() {}
+
+			const char	*what() const throw();
+	};
+
 private:
 	std::vector<std::string>			_cmds;
 	std::vector<std::string>			_inputs;

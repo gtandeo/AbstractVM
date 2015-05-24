@@ -10,7 +10,7 @@ int		main(int ac, char **av)
 			p.stdoutParsing();
 		}
 		catch (std::exception &e) {
-			e.what();
+			std::cout << e.what() << std::endl;
 		}
 	else if (ac == 2)
 	{
@@ -18,7 +18,7 @@ int		main(int ac, char **av)
 			p.fileParsing(av[1]);
 		}
 		catch (std::exception &e) {
-			e.what();
+			std::cout << e.what() << std::endl;
 		}
 	}
 	else

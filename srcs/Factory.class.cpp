@@ -87,9 +87,9 @@ IOperand const * Factory::createFloat(std::string const &value) const
 {
 	Operand		*ret;
 
-	if (std::atof(value.c_str()) > FLT_MAX)
+	if (std::stod(value.c_str()) > FLT_MAX)
 		throw Factory::OverFlowException();
-	else if (std::atof(value.c_str()) < FLT_MAX * -1)
+	else if (std::stod(value.c_str()) < FLT_MAX * -1)
 		throw Factory::UnderFlowException();
 	ret = new Operand(value, FLOAT);
 	return ret;
@@ -99,9 +99,9 @@ IOperand const * Factory::createDouble(std::string const &value) const
 {
 	Operand		*ret;
 
-	if (std::stod(value.c_str()) > DBL_MAX)
+	if (std::stold(value.c_str()) > DBL_MAX)
 		throw Factory::OverFlowException();
-	else if (std::stod(value.c_str()) < DBL_MAX * -1)
+	else if (std::stold(value.c_str()) < DBL_MAX * -1)
 		throw Factory::UnderFlowException();
 	ret = new Operand(value, DOUBLE);
 	return ret;

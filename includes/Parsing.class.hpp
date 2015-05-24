@@ -38,36 +38,36 @@ public:
 
 	class UnknownException : public std::exception {
 		public:
-			UnknownException(void);
-			UnknownException(UnknownException const &src);
-			~UnknownException(void) throw();
+			UnknownException(void) {}
+			UnknownException(UnknownException const &src) {*this = src;}
+			~UnknownException(void) throw() {}
 
 			const char	*what() const throw();
 	};
 
 	class LessThatTwoValuesException : public std::exception {
 		public:
-			LessThatTwoValuesException(void);
-			LessThatTwoValuesException(LessThatTwoValuesException const &src);
-			~LessThatTwoValuesException(void) throw();
+			LessThatTwoValuesException(void) {}
+			LessThatTwoValuesException(LessThatTwoValuesException const &src) {*this = src;}
+			~LessThatTwoValuesException(void) throw() {}
 
 			const char	*what() const throw();
 	};
 
 	class PopOnAnEmptyStackException : public std::exception {
 		public:
-			PopOnAnEmptyStackException(void);
-			PopOnAnEmptyStackException(PopOnAnEmptyStackException const &src);
-			~PopOnAnEmptyStackException(void) throw();
+			PopOnAnEmptyStackException(void) {}
+			PopOnAnEmptyStackException(PopOnAnEmptyStackException const &src) {*this = src;}
+			~PopOnAnEmptyStackException(void) throw() {}
 
 			const char	*what() const throw();
 	};
 
 	class AssertException : public std::exception {
 		public:
-			AssertException(void);
-			AssertException(AssertException const &src);
-			~AssertException(void) throw();
+			AssertException(void) {}
+			AssertException(AssertException const &src) {*this = src;}
+			~AssertException(void) throw() {}
 
 			const char	*what() const throw();
 	};

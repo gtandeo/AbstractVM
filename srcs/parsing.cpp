@@ -1,83 +1,19 @@
 #include "Parsing.class.hpp"
 
-Parsing::UnknownException::UnknownException(void)
-{
-	return ;
-}
-
-Parsing::UnknownException::UnknownException(UnknownException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Parsing::UnknownException::~UnknownException(void) throw()
-{
-	return ;
-}
-
 const char	*Parsing::Parsing::UnknownException::what() const throw()
 {
 	return "std::exception: Unknown command";
 };
-
-Parsing::LessThatTwoValuesException::LessThatTwoValuesException(void)
-{
-	return ;
-}
-
-Parsing::LessThatTwoValuesException::LessThatTwoValuesException(LessThatTwoValuesException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Parsing::LessThatTwoValuesException::~LessThatTwoValuesException(void) throw()
-{
-	return ;
-}
 
 const char	*Parsing::Parsing::LessThatTwoValuesException::what() const throw()
 {
 	return "std::exception: stack is composed of less that two values";
 };
 
-Parsing::PopOnAnEmptyStackException::PopOnAnEmptyStackException(void)
-{
-	return ;
-}
-
-Parsing::PopOnAnEmptyStackException::PopOnAnEmptyStackException(PopOnAnEmptyStackException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Parsing::PopOnAnEmptyStackException::~PopOnAnEmptyStackException(void) throw()
-{
-	return ;
-}
-
 const char	*Parsing::Parsing::PopOnAnEmptyStackException::what() const throw()
 {
 	return "std::exception: pop on an empty stack";
 };
-
-Parsing::AssertException::AssertException(void)
-{
-	return ;
-}
-
-Parsing::AssertException::AssertException(AssertException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Parsing::AssertException::~AssertException(void) throw()
-{
-	return ;
-}
 
 const char	*Parsing::Parsing::AssertException::what() const throw()
 {
@@ -205,7 +141,7 @@ void	Parsing::mod(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
-	result = *tmp % *_container.top();
+	result = tmp % _container.top();
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 	delete result;*/
@@ -229,7 +165,7 @@ void	Parsing::print(void)
 bool	Parsing::checkCmd(std::string const &line)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\([-]?[0-9]+(?:\\.[0-9]+)?\\)[\\s]*$", std::regex_constants::icase);
+	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\([-]?([0-9]+(?:[.][0-9]+)?)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
@@ -256,6 +192,9 @@ bool	Parsing::checkCmd(std::string const &line)
 	}
 	else if (regex_search(line, m2, r2))
 	{
+		std::cout << "m[1] = " << m2[1] << std::endl;
+		std::cout << "m[2] = " << m2[2] << std::endl;
+		std::cout << "m[3] = " << m2[3] << std::endl;
 		std::string		cmd = m2[1].str();
 		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
 		std::string		type = m2[2].str();

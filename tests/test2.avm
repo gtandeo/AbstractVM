@@ -6,8 +6,17 @@ div
 push int8(-34)
 print
 push int8(34)
+
+
+
+
+
+
+
+
 print
 assert     int8(34)
+dump
 assert int8(35)
 push double(-64345753454.345573)
 dump
@@ -23,9 +32,10 @@ push int8(121)
 print
 div
 dump
-add
+mul
 dump
 div
 dump
+div
 exit
 ;;

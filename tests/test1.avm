@@ -1,19 +1,22 @@
     push float(0)
 dump
+   print
 ;commentaire1
 push      double(2340872938764.234786)
   push   int8(8)
 push int32(23451)
 push float(234.6234)
+dump
 push int16(34643634)
+;push int16(34643634)
 push int8(62)
 ;commentaire2
 double(2349508723987720347608765.34536432)
-print
 dump
+print
     add
 dump
-commande_inconnue
+cette commande ne sert a rien
 sub
 dump
 div

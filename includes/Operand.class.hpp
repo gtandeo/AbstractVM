@@ -2,6 +2,8 @@
 # define OPERAND_CLASS_HPP
 
 # include <stdlib.h>
+# include <climits>
+# include <cfloat>
 # include <sstream>
 # include <cmath>
 # include "IOperand.class.hpp"

@@ -72,6 +72,15 @@ public:
 			const char	*what() const throw();
 	};
 
+	class DivModException : public std::exception {
+		public:
+			DivModException(void) {}
+			DivModException(DivModException const &src) {*this = src;}
+			~DivModException(void) throw() {}
+
+			const char	*what() const throw();
+	};
+
 private:
 	std::vector<std::string>			_cmds;
 	std::vector<std::string>			_inputs;

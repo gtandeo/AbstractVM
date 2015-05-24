@@ -1,5 +1,7 @@
 pop
+push float(0)
 push int8(34345)
+div
 push int8(34)
 print
 assert int8(34)

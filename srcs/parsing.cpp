@@ -20,6 +20,11 @@ const char	*Parsing::Parsing::AssertException::what() const throw()
 	return "std::exception: assert instruction is not true";
 };
 
+const char	*Parsing::Parsing::DivModException::what() const throw()
+{
+	return "std::exception: division/modulo by 0";
+};
+
 Parsing::Parsing(void)
 {
 	_cmds.push_back("push");
@@ -125,6 +130,8 @@ void	Parsing::div(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
+	if (_container.top()->toString() == "0")
+		throw Parsing::DivModException();
 	result = *tmp / *_container.top();
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
@@ -142,6 +149,8 @@ void	Parsing::mod(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
+	if (_container.top()->toString() == "0")
+		throw Parsing::DivModException();
 	ss << std::fmod(std::stod(tmp->toString().c_str()), std::stod(_container.top()->toString().c_str()));
 	e = tmp->getType() >= _container.top()->getType() ? tmp->getType() : _container.top()->getType();
 	_container.pop();

@@ -40,4 +40,3 @@ div
 push float(234)
 dump
 exit
-;;

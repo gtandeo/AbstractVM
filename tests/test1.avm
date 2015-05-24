@@ -28,4 +28,3 @@ mod
 dump
 assert double(34.45473)
 assert double()
-;;

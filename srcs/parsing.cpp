@@ -181,7 +181,7 @@ void	Parsing::print(void)
 	throw Parsing::AssertException();
 }
 
-bool	Parsing::checkCmd(std::string const &line)
+bool	Parsing::checkCmd(std::string const &line, int val)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
@@ -234,17 +234,17 @@ bool	Parsing::checkCmd(std::string const &line)
 		(this->*_op1[m3[1]])();
 		return true;
 	}
-	else if (line == "exit")
+	else if (val == 0 && line == "exit")
 		return true;
 	throw Parsing::UnknownException();
 }
 
-void	Parsing::execCmd(void)
+void	Parsing::execCmd(int val)
 {
 	for (std::vector<std::string>::iterator it = _inputs.begin(); it != _inputs.end(); it++)
 	{
 		try {
-			checkCmd(*it);
+			checkCmd(*it, val);
 		}
 		catch (std::exception &e) {
 			std::cout << "\033[1;31m" << e.what() << "\033[0m" << std::endl;
@@ -272,12 +272,12 @@ void	Parsing::fileParsing(const char *av)
 	std::string		line;
 
 	initPtr();
-	while (std::getline(file, line) && line != "exit" && line != ";;")
+	while (std::getline(file, line) && line != "exit")
 	{
 		if (line[0] != ';' && line.size())
 			_inputs.push_back(line);
 	}
-	execCmd();
+	execCmd(0);
 	if (line != "exit")
 		throw Parsing::ExitException();
 	return ;
@@ -288,15 +288,12 @@ void	Parsing::stdoutParsing(void)
 	std::string		line;
 
 	initPtr();
-	while (line != "exit" && line != ";;" && !std::cin.eof())
+	while (line != ";;" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
 		if (line[0] != ';' && line.size())
 			_inputs.push_back(line);
 	}
-	if (line != "exit")
-		throw Parsing::ExitException();
-	while (line != ";;" && std::getline(std::cin, line));
-	execCmd();
+	execCmd(1);
 	return ;
 }

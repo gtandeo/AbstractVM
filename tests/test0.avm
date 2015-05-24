@@ -7,4 +7,3 @@ dump
 assert float(-250.544)
 assert float(-250.543)
 exit
-;;

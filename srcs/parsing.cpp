@@ -133,18 +133,19 @@ void	Parsing::div(void)
 
 void	Parsing::mod(void)
 {
-	/*Factory			f;
-	IOperand const	*tmp;
-	IOperand const	*result;
+	Factory				f;
+	IOperand const		*tmp;
+	eOperandType		e;
+	std::stringstream	ss;
 
 	if (_container.size() < 2)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
-	result = tmp % _container.top();
+	ss << std::fmod(std::stod(tmp->toString().c_str()), std::stod(_container.top()->toString().c_str()));
+	e = tmp->getType() >= _container.top()->getType() ? tmp->getType() : _container.top()->getType();
 	_container.pop();
-	_container.push(f.createOperand(result->getType(), result->toString()));
-	delete result;*/
+	_container.push(f.createOperand(e, ss.str()));
 }
 
 void	Parsing::print(void)
@@ -192,9 +193,6 @@ bool	Parsing::checkCmd(std::string const &line)
 	}
 	else if (regex_search(line, m2, r2))
 	{
-		std::cout << "m[1] = " << m2[1] << std::endl;
-		std::cout << "m[2] = " << m2[2] << std::endl;
-		std::cout << "m[3] = " << m2[3] << std::endl;
 		std::string		cmd = m2[1].str();
 		std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
 		std::string		type = m2[2].str();

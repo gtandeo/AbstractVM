@@ -1,0 +1,31 @@
+pop
+push float(0)
+dump
+push int8(34345)
+div
+push int8(-34)
+print
+push int8(34)
+print
+assert     int8(34)
+assert int8(35)
+push double(-64345753454.345573)
+dump
+
+
+sub
+dump
+push int32(34562)
+print
+push int16(643
+dump
+push int8(121)
+print
+div
+dump
+add
+dump
+div
+dump
+exit
+;;

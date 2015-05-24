@@ -1,41 +1,9 @@
 #include "Factory.class.hpp"
 
-Factory::OverFlowException::OverFlowException(void)
-{
-	return ;
-}
-
-Factory::OverFlowException::OverFlowException(OverFlowException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Factory::OverFlowException::~OverFlowException(void) throw()
-{
-	return ;
-}
-
 const char	*Factory::Factory::OverFlowException::what() const throw()
 {
 	return "std::exception: overflow on a value";
 };
-
-Factory::UnderFlowException::UnderFlowException(void)
-{
-	return ;
-}
-
-Factory::UnderFlowException::UnderFlowException(UnderFlowException const &src)
-{
-	*this = src;
-	return ;
-}
-
-Factory::UnderFlowException::~UnderFlowException(void) throw()
-{
-	return ;
-}
 
 const char	*Factory::Factory::UnderFlowException::what() const throw()
 {

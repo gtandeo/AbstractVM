@@ -1,0 +1,10 @@
+push int8(-129)
+push float(746.54367)
+push int16(496)
+dump
+sub
+dump
+assert float(-250.544)
+assert float(-250.543)
+exit
+;;

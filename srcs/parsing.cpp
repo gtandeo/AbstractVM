@@ -72,7 +72,7 @@ void	Parsing::dump(void)
 	tmp = _container;
 	while (tmp.size())
 	{
-		std::cout << tmp.top()->toString() << std::endl;
+		std::cout << "\033[4;33m" << tmp.top()->toString() << "\033[0m" << std::endl;
 		tmp.pop();
 	}
 }
@@ -175,7 +175,7 @@ void	Parsing::print(void)
 	{
 		ss << _container.top()->toString();
 		ss >> ret;
-		std::cout << static_cast<char>(ret) << std::endl;
+		std::cout << "\033[1;34m" << static_cast<char>(ret) << "\033[0m" << std::endl;
 		return ;
 	}
 	throw Parsing::AssertException();
@@ -184,7 +184,7 @@ void	Parsing::print(void)
 bool	Parsing::checkCmd(std::string const &line)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\([-]?([0-9]+(?:[.][0-9]+)?)\\)[\\s]*$", std::regex_constants::icase);
+	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
@@ -247,7 +247,7 @@ void	Parsing::execCmd(void)
 			checkCmd(*it);
 		}
 		catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+			std::cout << "\033[1;31m" << e.what() << "\033[0m" << std::endl;
 		}
 	}
 }
@@ -274,7 +274,7 @@ void	Parsing::fileParsing(const char *av)
 	initPtr();
 	while (std::getline(file, line) && line != "exit" && line != ";;")
 	{
-		if (line[0] != ';')
+		if (line[0] != ';' && line.size())
 			_inputs.push_back(line);
 	}
 	execCmd();
@@ -291,7 +291,7 @@ void	Parsing::stdoutParsing(void)
 	while (line != "exit" && line != ";;" && !std::cin.eof())
 	{
 		std::getline(std::cin, line);
-		if (line[0] != ';')
+		if (line[0] != ';' && line.size())
 			_inputs.push_back(line);
 	}
 	if (line != "exit")

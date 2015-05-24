@@ -1,0 +1,28 @@
+    push float(0)
+dump
+;commentaire1
+push      double(2340872938764.234786)
+  push   int8(8)
+push int32(23451)
+push float(234.6234)
+push int16(34643634)
+push int8(62)
+;commentaire2
+double(2349508723987720347608765.34536432)
+print
+dump
+    add
+dump
+commande_inconnue
+sub
+dump
+div
+dump
+push int(34)
+mul
+dump
+mod
+dump
+assert double(34.45473)
+assert double()
+;;

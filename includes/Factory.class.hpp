@@ -16,18 +16,18 @@ public:
 
 	class OverFlowException : public std::exception {
 		public:
-			OverFlowException(void);
-			OverFlowException(OverFlowException const &src);
-			~OverFlowException(void) throw();
+			OverFlowException(void) {}
+			OverFlowException(OverFlowException const &src) {*this = src;}
+			~OverFlowException(void) throw() {}
 
 			const char	*what() const throw();
 	};
 
 	class UnderFlowException : public std::exception {
 		public:
-			UnderFlowException(void);
-			UnderFlowException(UnderFlowException const &src);
-			~UnderFlowException(void) throw();
+			UnderFlowException(void) {}
+			UnderFlowException(UnderFlowException const &src) {*this = src;}
+			~UnderFlowException(void) throw() {}
 
 			const char	*what() const throw();
 	};

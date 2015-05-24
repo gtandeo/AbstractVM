@@ -10,7 +10,7 @@ int		main(int ac, char **av)
 			p.stdoutParsing();
 		}
 		catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+			std::cout << "\033[3;36m" << e.what() << "\033[0m" << std::endl;
 		}
 	else if (ac == 2)
 	{
@@ -18,7 +18,7 @@ int		main(int ac, char **av)
 			p.fileParsing(av[1]);
 		}
 		catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+			std::cout << "\033[3;36m" << e.what() << "\033[0m" << std::endl;
 		}
 	}
 	else

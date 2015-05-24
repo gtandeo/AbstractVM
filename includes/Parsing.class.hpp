@@ -29,6 +29,7 @@ public:
 	void	div(void);
 	void	mod(void);
 	void	print(void);
+	void	cat(void);
 	
 	void	initPtr(void);
 	void	execCmd(int val);

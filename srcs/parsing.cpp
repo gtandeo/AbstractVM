@@ -42,7 +42,7 @@ Parsing::Parsing(void)
 	_cmds.push_back("div");
 	_cmds.push_back("mod");
 	_cmds.push_back("print");
-	_cmds.push_back("exit");
+	_cmds.push_back("cat");
 }
 
 void	Parsing::push(IOperand const *data)
@@ -181,11 +181,33 @@ void	Parsing::print(void)
 	throw Parsing::AssertException();
 }
 
+void	Parsing::cat(void)																								                        
+{
+	std::stringstream ss;
+
+	ss << "  _" << std::endl << "  \\`*-. " << std::endl \
+		<< "   )  _`-.  " << std::endl \
+		<< "  .  : `. .  " << std::endl \
+		<< "  : _   '  \\  " << std::endl \
+		<< "  ; *` _.   `*-._   " << std::endl \
+		<< "  `-.-'          `-.  " << std::endl \
+		<< "    ;       `       `.    " << std::endl \
+		<< "    :.       .        \\  " << std::endl \
+		<< "    . \\  .   :   .-'   . " << std::endl \
+		<< "    '  `+.;  ;  '      : " << std::endl \
+		<< "    :  '  |    ;       ;-. " << std::endl \
+		<< "    ; '   : :`-:     _.`* ;" << std::endl \
+		<< " .*' /  .*' ; .*`- +'  `*' " << std::endl \
+		<< " `*-*   `*-*  `*-*'        " << std::endl;
+	std::cout << ss.str();
+	return ;
+}
+
 bool	Parsing::checkCmd(std::string const &line, int val)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print)[\\s]*$", std::regex_constants::icase);
+	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print|cat)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
 	std::smatch		m3;
@@ -262,6 +284,7 @@ void	Parsing::initPtr(void)
 	this->_op1["div"] = &Parsing::div;
 	this->_op1["mod"] = &Parsing::mod;
 	this->_op1["print"] = &Parsing::print;
+	this->_op1["cat"] = &Parsing::cat;
 	this->_op2["push"] = &Parsing::push;
 	this->_op2["assert"] = &Parsing::assert;
 }

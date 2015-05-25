@@ -30,6 +30,16 @@ const char	*Parsing::Parsing::ExitException::what() const throw()
 	return "std::exception: program doesn’t have an exit instruction";
 };
 
+const char	*Parsing::Parsing::FactException::what() const throw()
+{
+	return "std::exception: can't factorial a negative number";
+};
+
+const char	*Parsing::Parsing::FactTypeException::what() const throw()
+{
+	return "std::exception: you can only factorial integers numbers";
+};
+
 Parsing::Parsing(void)
 {
 	_cmds.push_back("push");
@@ -184,10 +194,10 @@ void	Parsing::fact(void)
 	if (_container.size() < 1)
 		throw Parsing::LessThatTwoValuesException();
 	if (_container.top()->getType() == FLOAT || _container.top()->getType() == DOUBLE)
-		throw std::exception();
+		throw Parsing::FactTypeException();
 	fact = std::atoi(_container.top()->toString().c_str());
 	if (fact < 0)
-		throw std::exception();
+		throw Parsing::FactException();
 	for (int i = 1; i <= fact + 1; i++)
 	{
 		if (ret * i > INT32_MAX)

@@ -94,6 +94,22 @@ public:
 			const char	*what() const throw();
 	};
 
+	class FactException : public std::exception {
+		public:
+			FactException(void) {}
+			FactException(FactException const &src) {*this = src;}
+			~FactException(void) {}
+			const char	*what() const throw();
+	};
+
+	class FactTypeException : public std::exception {
+		public:
+			FactTypeException(void) {}
+			FactTypeException(FactTypeException const &src) {*this = src;}
+			~FactTypeException(void) {}
+			const char	*what() const throw();
+	};
+
 private:
 	std::vector<std::string>			_cmds;
 	std::vector<std::string>			_inputs;

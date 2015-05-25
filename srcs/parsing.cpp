@@ -89,7 +89,7 @@ void	Parsing::add(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
-	result = *tmp + *_container.top();
+	result = *_container.top() + *tmp;
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 	delete result;
@@ -105,7 +105,7 @@ void	Parsing::sub(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
-	result = *tmp - *_container.top();
+	result = *_container.top() - *tmp;
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 	delete result;
@@ -121,7 +121,7 @@ void	Parsing::mul(void)
 		throw Parsing::LessThatTwoValuesException();
 	tmp = _container.top();
 	_container.pop();
-	result = *tmp * *_container.top();
+	result = *_container.top() * *tmp;
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 	delete result;
@@ -135,14 +135,11 @@ void	Parsing::div(void)
 
 	if (_container.size() < 2)
 		throw Parsing::LessThatTwoValuesException();
+	if (_container.top()->toString() == "0")
+		throw Parsing::DivModException();
 	tmp = _container.top();
 	_container.pop();
-	if (_container.top()->toString() == "0")
-	{
-		_container.push(tmp);
-		throw Parsing::DivModException();
-	}
-	result = *tmp / *_container.top();
+	result = *_container.top() / *tmp;
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 	delete result;
@@ -156,14 +153,11 @@ void	Parsing::mod(void)
 
 	if (_container.size() < 2)
 		throw Parsing::LessThatTwoValuesException();
+	if (_container.top()->toString() == "0")
+		throw Parsing::DivModException();
 	tmp = _container.top();
 	_container.pop();
-	if (_container.top()->toString() == "0")
-	{
-		_container.push(tmp);
-		throw Parsing::DivModException();
-	}
-	result = *tmp % *_container.top();
+	result = *_container.top() % *tmp;
 	_container.pop();
 	_container.push(f.createOperand(result->getType(), result->toString()));
 }
@@ -245,9 +239,9 @@ void	Parsing::cat(void)
 
 bool	Parsing::checkCmd(std::string const &line, int val)
 {
-	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|sqrt|fact|print|cat)[\\s]*$", std::regex_constants::icase);
+	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*([;]?)(.*)*$", std::regex_constants::icase);
+	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*([;]?)(.*)*$", std::regex_constants::icase);
+	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|sqrt|fact|print|cat)[\\s]*([;]?)(.*)*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
 	std::smatch		m3;

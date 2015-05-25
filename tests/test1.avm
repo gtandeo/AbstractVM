@@ -1,11 +1,12 @@
-    push float(0)
+push int8(0)
+	push float(23.643)
 dump
    print
 ;commentaire1
 push      double(2340872938764.234786)
   push   int8(8)
 push int32(23451)
-push float(234.6234)
+push float(-234.6234)
 dump
 push int16(34643634)
 ;push int16(34643634)
@@ -19,12 +20,19 @@ dump
 cette commande ne sert a rien
 sub
 dump
-div
-dump
-push int(34)
+print
 mul
 dump
-mod
+push int(-34)
+div
 dump
-assert double(34.45473)
-assert double()
+pop
+add
+push int8(0)
+dump
+mod
+assert int8(0)
+pop
+assert float(23.643)
+dump
+cat

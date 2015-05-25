@@ -19,9 +19,9 @@ IOperand const * Factory::createInt8(std::string const &value) const
 {
 	Operand		*ret;
 
-	if (std::atoi(value.c_str()) > INT8_MAX)
+	if (std::stod(value.c_str()) > INT8_MAX)
 		throw Factory::OverFlowException();
-	else if (std::atoi(value.c_str()) < INT8_MIN)
+	else if (std::stod(value.c_str()) < INT8_MAX * -1)
 		throw Factory::UnderFlowException();
 	ret = new Operand(value, INT8);
 	return ret;
@@ -31,9 +31,9 @@ IOperand const * Factory::createInt16(std::string const &value) const
 {
 	Operand		*ret;
 
-	if (std::atoi(value.c_str()) > INT16_MAX)
+	if (std::stod(value.c_str()) > INT16_MAX)
 		throw Factory::OverFlowException();
-	else if (std::atoi(value.c_str()) < INT16_MIN)
+	else if (std::stod(value.c_str()) < INT16_MIN)
 		throw Factory::UnderFlowException();
 	ret = new Operand(value, INT16);
 	return ret;

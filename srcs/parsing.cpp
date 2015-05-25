@@ -7,7 +7,7 @@ const char	*Parsing::Parsing::UnknownException::what() const throw()
 
 const char	*Parsing::Parsing::LessThatTwoValuesException::what() const throw()
 {
-	return "std::exception: stack is composed of less that two values";
+	return "std::exception: there is not enough values in your stack";
 };
 
 const char	*Parsing::Parsing::PopOnAnEmptyStackException::what() const throw()
@@ -42,6 +42,7 @@ Parsing::Parsing(void)
 	_cmds.push_back("div");
 	_cmds.push_back("mod");
 	_cmds.push_back("sqrt");
+	_cmds.push_back("fact");
 	_cmds.push_back("print");
 	_cmds.push_back("cat");
 }
@@ -179,6 +180,32 @@ void	Parsing::sqrt(void)
 	_container.push(f.createOperand(DOUBLE, ss.str()));
 }
 
+void	Parsing::fact(void)
+{
+	Factory				f;
+	std::stringstream	ss;
+	double				ret = 1;
+	int					fact;
+
+	if (_container.size() < 1)
+		throw Parsing::LessThatTwoValuesException();
+	if (_container.top()->getType() == FLOAT || _container.top()->getType() == DOUBLE)
+		throw std::exception();
+	fact = std::atoi(_container.top()->toString().c_str());
+	if (fact < 0)
+		throw std::exception();
+	for (int i = 1; i <= fact + 1; i++)
+	{
+		if (ret * i > INT32_MAX)
+			throw Factory::OverFlowException();
+		ret *= i;
+		i++;
+	}
+	ss << ret;
+	_container.pop();
+	_container.push(f.createOperand(INT32, ss.str()));
+}
+
 void	Parsing::print(void)
 {
 	std::stringstream	ss;
@@ -220,7 +247,7 @@ bool	Parsing::checkCmd(std::string const &line, int val)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|sqrt|print|cat)[\\s]*$", std::regex_constants::icase);
+	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|sqrt|fact|print|cat)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
 	std::smatch		m3;
@@ -297,6 +324,7 @@ void	Parsing::initPtr(void)
 	this->_op1["div"] = &Parsing::div;
 	this->_op1["mod"] = &Parsing::mod;
 	this->_op1["sqrt"] = &Parsing::sqrt;
+	this->_op1["fact"] = &Parsing::fact;
 	this->_op1["print"] = &Parsing::print;
 	this->_op1["cat"] = &Parsing::cat;
 	this->_op2["push"] = &Parsing::push;

@@ -30,6 +30,7 @@ public:
 	void	div(void);
 	void	mod(void);
 	void	sqrt(void);
+	void	fact(void);
 	void	print(void);
 	void	cat(void);
 	

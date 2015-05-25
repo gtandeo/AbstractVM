@@ -41,6 +41,7 @@ Parsing::Parsing(void)
 	_cmds.push_back("mul");
 	_cmds.push_back("div");
 	_cmds.push_back("mod");
+	_cmds.push_back("sqrt");
 	_cmds.push_back("print");
 	_cmds.push_back("cat");
 }
@@ -166,6 +167,18 @@ void	Parsing::mod(void)
 	_container.push(f.createOperand(result->getType(), result->toString()));
 }
 
+void	Parsing::sqrt(void)
+{
+	Factory				f;
+	std::stringstream	ss;
+
+	if (_container.size() < 1)
+		throw Parsing::LessThatTwoValuesException();
+	ss << ::sqrt(std::stod(_container.top()->toString().c_str()));
+	_container.pop();
+	_container.push(f.createOperand(DOUBLE, ss.str()));
+}
+
 void	Parsing::print(void)
 {
 	std::stringstream	ss;
@@ -207,7 +220,7 @@ bool	Parsing::checkCmd(std::string const &line, int val)
 {
 	std::regex		r1("^[\\s]*(push|assert)[\\s]+(int8|int16|int32)[\\s]*\\(([-]?[0-9]+)\\)[\\s]*$", std::regex_constants::icase);
 	std::regex		r2("^[\\s]*(push|assert)[\\s]+(float|double)[\\s]*\\(([-]?([0-9]+(?:[.][0-9]+)?))\\)[\\s]*$", std::regex_constants::icase);
-	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|print|cat)[\\s]*$", std::regex_constants::icase);
+	std::regex		r3("^[\\s]*(pop|dump|add|sub|mul|div|mod|sqrt|print|cat)[\\s]*$", std::regex_constants::icase);
 	std::smatch		m;
 	std::smatch		m2;
 	std::smatch		m3;
@@ -283,6 +296,7 @@ void	Parsing::initPtr(void)
 	this->_op1["mul"] = &Parsing::mul;
 	this->_op1["div"] = &Parsing::div;
 	this->_op1["mod"] = &Parsing::mod;
+	this->_op1["sqrt"] = &Parsing::sqrt;
 	this->_op1["print"] = &Parsing::print;
 	this->_op1["cat"] = &Parsing::cat;
 	this->_op2["push"] = &Parsing::push;

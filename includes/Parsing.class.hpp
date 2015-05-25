@@ -6,6 +6,7 @@
 # include <stack>
 # include <map>
 # include <regex>
+# include <math.h>
 # include "Operand.class.hpp"
 # include "Factory.class.hpp"
 
@@ -28,6 +29,7 @@ public:
 	void	mul(void);
 	void	div(void);
 	void	mod(void);
+	void	sqrt(void);
 	void	print(void);
 	void	cat(void);
 	
